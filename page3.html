@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animación de Círculo con p5.js</title>
+  <!-- Enlaza la biblioteca p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white; /* Color del texto en toda la página */
+    }
+    canvas {
+      display: block;
+    }
+    header {
+      position: absolute; /* Posiciona el encabezado sobre el canvas */
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #2a343b; /* Fondo del encabezado */
+      text-align: left; /* Alinea el contenido a la izquierda */
+      color: white; /* Color del texto en el encabezado */
+      z-index: 1; /* Asegura que el encabezado esté sobre el canvas */
+    }
+    header p {
+      display: inline;
+      margin: 0;
+    }
+    header a {
+      color: white; /* Color del texto de los enlaces */
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+    header a.activo {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #saveButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #2a343b; /* Fondo del botón igual al color del encabezado */
+      border: 2px solid white; /* Borde del botón en rojo */
+      color: white; /* Color del texto del botón */
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      z-index: 2; /* Asegura que el botón esté sobre el índice */
+    }
+    #saveButton:hover {
+      background-color: #2a343b; /* Color de fondo del botón al pasar el ratón */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p>
+      <a href="index.html">Bienvenide</a>
+      <a href="page.html">Dibuje</a>
+      <a href="page8.html">Caleidoscopio</a>
+      <a href="page3.html" class="activo">Condiciones</a>
+      <a href="page7.html">Poema Aleatorio</a>
+      <a href="page6.html">Orbit Control</a>
+    </p>
+    <h1>Condiciones</h1> <!-- Título agregado aquí -->
+  </header>
+
+  <button id="saveButton" onclick="saveDrawing()">Imprimir</button>
+
+  <script>
+    // Variables de posición
+    let circlePositionX = 200;
+    let circlePositionY = 200;
+
+    // Variables de velocidad
+    let circleSpeedX = 2;
+    let circleSpeedY = 3;
+
+    // Variable de radio
+    let circleRadius = 25;
+
+    // Variable de tono
+    let circleHue = 0;
+
+    // Variable para controlar el movimiento
+    let moving = true;
+
+    function setup() {
+      // Crea un lienzo de tamaño ajustable
+      createCanvas(windowWidth, windowHeight);
+
+      // Cubre el lienzo con color igual al del índice
+      background('#2a343b');
+
+      // Dibuja las elipses usando su radio
+      ellipseMode(RADIUS);
+
+      // Usa tono, saturación y brillo para los colores en el rastro del círculo
+      colorMode(HSB);
+
+      // Establece el grosor del trazo en 4 unidades
+      strokeWeight(4);
+
+      // Crea una descripción accesible para lectores de pantalla
+      describe(
+        'Un círculo se mueve por el lienzo y se detiene cuando el usuario hace clic. El círculo rebota en los bordes del lienzo y deja un rastro de arco iris.'
+      );
+    }
+
+    function draw() {
+      // Borra el lienzo con el color de fondo al comienzo de cada frame
+      // No usamos background aquí para mantener el rastro
+      // background('#6db0dc');
+
+      // Establece el color del trazo usando el tono actual
+      stroke(circleHue, 80, 90);
+
+      // Si la posición x del círculo está entre 100 y 300
+      if (circlePositionX >= 100 && circlePositionX <= 300) {
+        // Establece el color de relleno a negro
+        fill(0);
+      } else {
+        // De lo contrario, establece el color de relleno a blanco
+        fill(255);
+      }
+
+      // Dibuja el círculo en la posición actual
+      circle(circlePositionX, circlePositionY, circleRadius);
+
+      // Mueve el círculo si está en movimiento
+      if (moving) {
+        // Añade la velocidad a la posición del círculo para moverlo
+        circlePositionX += circleSpeedX;
+        circlePositionY += circleSpeedY;
+
+        // Incrementa el tono en 1
+        circleHue += 1;
+
+        // Si el tono ha alcanzado el valor máximo
+        if (circleHue >= 360) {
+          // Resetea el tono a 0
+          circleHue = 0;
+        }
+
+        // Si el círculo está más allá del borde izquierdo o derecho
+        if (circlePositionX < circleRadius || circlePositionX > width - circleRadius) {
+          // Invierte la velocidad horizontal
+          circleSpeedX = -circleSpeedX;
+        }
+
+        // Si el círculo está más allá del borde superior o inferior
+        if (circlePositionY < circleRadius || circlePositionY > height - circleRadius) {
+          // Invierte la velocidad vertical
+          circleSpeedY = -circleSpeedY;
+        }
+      }
+    }
+
+    function mousePressed() {
+      // Detiene o reanuda el movimiento del círculo cuando se hace clic
+      moving = !moving;
+    }
+
+    function saveDrawing() {
+      saveCanvas('Condiciones', 'jpg');
+    }
+  </script>
+</body>
+</html>

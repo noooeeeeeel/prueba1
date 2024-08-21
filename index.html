@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <!--Busque su emoji en https://www.w3schools.com/html/html_emojis.asp-->
+    <title>🗿 ¡Segunda clase!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            color: white; /* Establece el color del texto en blanco para todo el cuerpo */
+        }
+        
+        header p, header h1, header h2 {
+            color: white; /* Establece el color del texto en blanco para el encabezado */
+        }
+
+        header a {
+            color: white; /* Establece el color de los enlaces en blanco */
+        }
+
+        button {
+            color: white; /* Establece el color del texto de los botones en blanco */
+            background-color: #6db0dc; /* Ajusta el color de fondo del botón si es necesario */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <p>
+            <a href="index.html" class="activo">Bienvenide</a>
+            <a href="page.html">Dibuje</a>
+            <a href="page.html">Caleidoscopio</a>
+            <a href="page3.html">Condiciones</a>
+            <a href="page7.html">Poema Aleatorio</a>
+            <a href="page6.html">Orbit Control</a>
+        </p>
+        <h1></h1>
+        <h2></h2>
+        <p>Me meti a este ramo, porque queria acercarme al mundo del desarrollo web, ya que creo que es algo interesante y te abre muchas oportunidades. Me quede en el ramo porque quiero aprender de estos temas.</p>
+        <p>Dibuja mientras haces <code>mouseDragged()</code></p>
+    </header>
+    <main>
+        <aside>
+            <button onclick="foto()">Imprime</button>
+            <button onclick="borra()">Borra</button>
+        </aside>
+    </main>
+    <script>
+        var saludo = {
+            arriba: ["¡Hola mundo!","¡Hola universo!", "¡Hola orbe!", "¡Hola cosmos!"],
+            abajo: "Mi nombre es Noel Soler"
+        };
+        var titular;
+        var nombre; 
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            // Selecciona un par de colores en https://materialui.co/colors
+            background('#6db0dc');
+            stroke('#546E7A');
+            titular = select('h1');
+            titular.html(random(saludo.arriba));
+            nombre = select('h2');
+            nombre.html(saludo.abajo);
+        }
+        function draw() {
+           background('#2a343b');
+           textSize(48);
+           text('🐙', mouseX, mouseY);
+        }
+        function mouseDragged() {
+            line(pmouseX, pmouseY, mouseX, mouseY);
+        }
+        
+        function foto() {
+            saveCanvas('mi-dibujo.jpg');
+        }
+        
+        function borra() {
+            background('#6db0dc');
+        }
+    </script>
+</body>
+</html>

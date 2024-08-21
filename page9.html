@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caleidoscopio</title>
+  <!-- Incluye la biblioteca p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white; /* Color del texto en toda la página */
+      background-color: #2a343b; /* Fondo de la página */
+    }
+    canvas {
+      display: block;
+    }
+    header {
+      position: absolute; /* Posiciona el encabezado sobre el canvas */
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #2a343b; /* Fondo del encabezado */
+      text-align: left; /* Alinea el contenido a la izquierda */
+      color: white; /* Color del texto del encabezado */
+      z-index: 1; /* Asegura que el encabezado esté sobre el canvas */
+    }
+    header p {
+      display: inline;
+      margin: 0;
+    }
+    header a {
+      color: white; /* Color de los enlaces en blanco */
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+    header a.activo {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #saveButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #2a343b; /* Fondo del botón igual al color del encabezado */
+      border: 2px solid white; /* Borde del botón en blanco */
+      color: white; /* Color del texto del botón */
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      z-index: 2; /* Asegura que el botón esté sobre el índice */
+    }
+    #saveButton:hover {
+      background-color: #2a343b; /* Color de fondo del botón al pasar el ratón */
+    }
+    h1 {
+      color: white; /* Color del título en el encabezado */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p>
+      <a href="index.html">Bienvenide</a>
+      <a href="page.html">Dibuje</a>
+      <a href="page9.html" class="activo">Caleidoscopio</a>
+      <a href="page3.html">Condiciones</a>
+      <a href="page7.html">Poema Aleatorio</a>
+      <a href="page6.html">Orbit Control</a>
+    </p>
+    <h1>Caleidoscopio</h1> <!-- Título agregado aquí -->
+  </header>
+
+  <button id="saveButton" onclick="saveDrawing()">Imprimir</button>
+
+  <script>
+    // Define the global variables.
+    let symmetry = 6;
+    let angle = 360 / symmetry;
+
+    function setup() {
+      describe(
+        `Dark grey canvas that reflects the lines drawn within it in ${symmetry} sections.`
+      );
+      createCanvas(windowWidth, windowHeight);
+      angleMode(DEGREES);
+      background('#2a343b'); // Color de fondo igual al del index
+    }
+
+    function draw() {
+      translate(width / 2, height / 2);
+
+      if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+        let lineStartX = mouseX - width / 2;
+        let lineStartY = mouseY - height / 2;
+        let lineEndX = pmouseX - width / 2;
+        let lineEndY = pmouseY - height / 2;
+
+        if (mouseIsPressed === true) {
+          for (let i = 0; i < symmetry; i++) {
+            rotate(angle);
+            stroke(255); // Color blanco para las líneas
+            strokeWeight(3);
+            line(lineStartX, lineStartY, lineEndX, lineEndY);
+
+            push();
+            scale(1, -1);
+            line(lineStartX, lineStartY, lineEndX, lineEndY);
+            pop();
+          }
+        }
+      }
+    }
+
+    function saveDrawing() {
+      saveCanvas('Caleidoscopio', 'jpg');
+    }
+  </script>
+</body>
+</html>

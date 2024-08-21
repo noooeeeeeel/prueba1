@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poema Aleatorio</title>
+  <!-- Incluye la biblioteca p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      color: white; /* Color del texto en toda la página */
+    }
+    canvas {
+      display: block;
+    }
+    header {
+      position: absolute; /* Posiciona el encabezado sobre el canvas */
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #2a343b; /* Fondo del encabezado */
+      text-align: left; /* Alinea el contenido a la izquierda */
+      color: white; /* Color del texto en el encabezado */
+      z-index: 1; /* Asegura que el encabezado esté sobre el canvas */
+    }
+    header p {
+      display: inline;
+      margin: 0;
+    }
+    header a {
+      color: white; /* Color del texto de los enlaces */
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+    header a.activo {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #saveButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #2a343b; /* Fondo del botón igual al color del encabezado */
+      border: 2px solid white; /* Borde del botón en rojo */
+      color: white; /* Color del texto del botón */
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      z-index: 2; /* Asegura que el botón esté sobre el índice */
+    }
+    #saveButton:hover {
+      background-color: #2a343b; /* Color de fondo del botón al pasar el ratón */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p>
+      <a href="index.html">Bienvenide</a>
+      <a href="page.html">Dibuje</a>
+      <a href="page8.html">Caleidoscopio</a>
+      <a href="page3.html">Condiciones</a>
+      <a href="page7.html" class="activo">Poema Aleatorio</a>
+      <a href="page6.html">Orbit Control</a>
+    </p>
+    <h1>Poema Aleatorio</h1> <!-- Título agregado aquí -->
+    <button id="saveButton" onclick="saveDrawing()">Imprimir</button>
+  </header>
+
+  <script>
+    let words = [
+      'Porque', 'no', 'supiste', 'entender', 'a', 'mi', 'corazón',
+      'Lo', 'que', 'había', 'en', 'él', 'tuviste', 'el', 'valor',
+      'de', 'ver', 'quién', 'soy', 'escuchas', 'lo', 'está', 'tan',
+      'cerca', 'de', 'ti', 'Sólo', 'ruido', 'afuera', 'yo', 'Que',
+      'estoy', 'a', 'un', 'lado', 'desaparezco', 'para', 'ti', 'No',
+      'voy', 'a', 'llorar', 'y', 'decir', 'merezco', 'esto', 'Es',
+      'probable', 'que', 'lo', 'quiero', 'por', 'eso', 'me', 'voy',
+      '¡Qué', 'lástima', 'adiós', 'Me', 'despido', 'de', 'ti', 'Porque',
+      'sé', 'me', 'espera', 'algo', 'mejor', 'Alguien', 'que', 'sepa',
+      'darme', 'amor', 'De', 'ese', 'endulza', 'sal', 'hace', 'que',
+      'salga', 'sol', 'Yo', 'qué', 'pensé', 'Nunca', 'iría', 'que',
+      'es', 'del', 'bueno', 'toda', 'vida', 'Pero', 'hoy', 'entendí',
+      'no', 'hay', 'suficiente', 'para', 'dos', 'lo', 'quiero', '¡Qué',
+      'lástima', 'Me', 'despido', 'y', 'me', 'voy', 'I-i-i', 'i-i-i-i',
+      'Me', 'despido', 'y'
+    ];
+
+    let wordCount = 15;
+    let hue;
+    let position;
+
+    function setup() {
+      // Importa la fuente seleccionada
+      textFont('Space Mono');
+
+      createCanvas(windowWidth, windowHeight);
+
+      // Establece la alineación del texto al centro y el modo de color a HSB.
+      textAlign(CENTER);
+      colorMode(HSB);
+
+      // Define el tono como un valor aleatorio.
+      hue = random(180, 360);
+
+      // Define el punto de inicio aleatorio para seleccionar las palabras en el array.
+      position = floor(random(0, words.length - wordCount));
+
+      // Establece el color de fondo igual al del index
+      background('#2a343b');
+
+      // Dibuja tantas palabras como se ha definido en el canvas en posiciones aleatorias.
+      for (let i = 0; i < 20; i++) {
+        textSize(random(16, 48));
+        fill(hue, 200, random(50, 95));
+        text(random(words), random(width), random(height));
+      }
+    }
+
+    function saveDrawing() {
+      saveCanvas('poema-aleatorio', 'jpg');
+    }
+  </script>
+</body>
+</html>

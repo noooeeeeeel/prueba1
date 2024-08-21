@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Sphere of Cubes</title>
+  <!-- Incluye la biblioteca p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    canvas {
+      display: block;
+    }
+    header {
+      position: absolute; /* Posiciona el encabezado sobre el canvas */
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #2a343b; /* Fondo del encabezado */
+      text-align: left; /* Alinea el contenido a la izquierda */
+      color: white; /* Color de texto del encabezado */
+      z-index: 1; /* Asegura que el encabezado esté sobre el canvas */
+    }
+    header p {
+      display: inline;
+      margin: 0;
+    }
+    header a {
+      color: white; /* Color de los enlaces en el encabezado */
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+    header a.activo {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    #saveButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background-color: #2a343b; /* Fondo del botón igual al color del encabezado */
+      border: 2px solid white; /* Borde del botón en rojo */
+      color: white; /* Color del texto del botón */
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+      z-index: 2; /* Asegura que el botón esté sobre el índice */
+    }
+    #saveButton:hover {
+      background-color: #5a9bd4; /* Color de fondo del botón al pasar el ratón */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p>
+      <a href="index.html">Bienvenide</a>
+      <a href="page.html">Dibuje</a>
+      <a href="page9.html">Caleidoscopio</a>
+      <a href="page3.html">Condiciones</a>
+      <a href="page7.html">Poema Aleatorio</a>
+      <a href="page6.html" class="activo">Orbit Control</a>
+    </p>
+    <h1>Orbit Control</h1> <!-- Título agregado aquí -->
+  </header>
+
+  <button id="saveButton" onclick="saveDrawing()">Imprimir</button>
+
+  <script>
+    function setup() {
+      createCanvas(windowWidth, windowHeight, WEBGL);
+      angleMode(DEGREES);
+      strokeWeight(5);
+      noFill();
+      stroke(99, 99, 99);
+      describe(
+        'Users can click on the screen and drag to adjust their perspective in 3D space. The space contains a sphere of dark purple cubes on a light pink background.'
+      );
+    }
+
+    function draw() {
+      background('#2a343b'); // Fondo igual al del index
+
+      // Call every frame to adjust camera based on mouse/touch
+      orbitControl();
+
+      // Rotate rings in a half circle to create a sphere of cubes
+      for (let zAngle = 0; zAngle < 180; zAngle += 30) {
+        // Rotate cubes in a full circle to create a ring of cubes
+        for (let xAngle = 0; xAngle < 360; xAngle += 30) {
+          push();
+
+          // Rotate from center of sphere
+          rotateZ(zAngle);
+          rotateX(xAngle);
+
+          // Then translate down 400 units
+          translate(0, 400, 0);
+          box();
+          pop();
+        }
+      }
+    }
+
+    function saveDrawing() {
+      saveCanvas('Orbit Control', 'jpg');
+    }
+  </script>
+</body>
+</html>
